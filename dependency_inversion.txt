@@ -1,0 +1,171 @@
+The **Dependency Inversion Principle (DIP)** is one of the SOLID principles and it sounds complicated—but it’s actually very simple once you see the pattern.
+
+---
+
+# 🧠 What DIP really means (simple version)
+
+👉 **High-level classes should NOT depend on low-level classes.**
+👉 **Both should depend on abstractions (interfaces).**
+
+👉 **Abstractions should NOT depend on details.**
+👉 **Details should depend on abstractions.**
+
+---
+
+# ❌ Without DIP (Bad Design)
+
+Imagine this:
+
+```java
+class Keyboard {
+    void type() {
+        System.out.println("Typing...");
+    }
+}
+
+class Computer {
+    private Keyboard keyboard = new Keyboard(); // tightly coupled
+
+    void start() {
+        keyboard.type();
+    }
+}
+```
+
+### 🚨 Problem:
+
+* `Computer` is directly dependent on `Keyboard`
+* If tomorrow you switch to `BluetoothKeyboard`, you must modify `Computer`
+
+👉 This is **tight coupling** → bad for scalability & testing
+
+---
+
+# ✅ With DIP (Good Design)
+
+### Step 1: Create abstraction
+
+```java
+interface InputDevice {
+    void input();
+}
+```
+
+---
+
+### Step 2: Low-level classes implement it
+
+```java
+class Keyboard implements InputDevice {
+    public void input() {
+        System.out.println("Typing...");
+    }
+}
+
+class BluetoothKeyboard implements InputDevice {
+    public void input() {
+        System.out.println("Typing via Bluetooth...");
+    }
+}
+```
+
+---
+
+### Step 3: High-level class depends on abstraction
+
+```java
+class Computer {
+    private InputDevice device;
+
+    // Dependency Injection
+    Computer(InputDevice device) {
+        this.device = device;
+    }
+
+    void start() {
+        device.input();
+    }
+}
+```
+
+---
+
+### Step 4: Use it
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        InputDevice keyboard = new Keyboard();
+        Computer pc = new Computer(keyboard);
+        pc.start();
+
+        InputDevice bluetooth = new BluetoothKeyboard();
+        Computer laptop = new Computer(bluetooth);
+        laptop.start();
+    }
+}
+```
+
+---
+
+# 🔥 What changed?
+
+| Before ❌             | After ✅                |
+| -------------------- | ---------------------- |
+| Computer → Keyboard  | Computer → InputDevice |
+| Hardcoded dependency | Flexible dependency    |
+| Not testable         | Easily testable        |
+| Not scalable         | Plug & play            |
+
+---
+
+# 🧩 Key Concept: Dependency Injection
+
+Instead of creating objects inside the class:
+
+```java
+private Keyboard keyboard = new Keyboard(); ❌
+```
+
+We pass them from outside:
+
+```java
+Computer(InputDevice device) ✅
+```
+
+---
+
+# 📏 Golden Rules to Remember
+
+1. **Depend on interfaces, not implementations**
+2. **Use constructor injection (most common)**
+3. **Avoid `new` inside high-level classes**
+4. **Make your code “plug-and-play”**
+5. **Helps in testing (mocking)**
+
+---
+
+# 🎯 Real-Life Analogy
+
+Think of a **phone charger port (USB-C)**:
+
+* Phone = High-level module
+* Charger = Low-level module
+* USB-C = Abstraction
+
+👉 Phone doesn’t care which charger you use
+👉 Everything depends on the **interface (USB-C)**
+
+---
+
+# 💡 One-line summary
+
+👉 **DIP = “Don’t hardcode dependencies, inject them via abstraction.”**
+
+---
+
+If you want, I can also:
+
+* Show **DIP in Spring Boot (very important for interviews)**
+* Give **interview questions like SRP/OCP/DIP mix**
+* Show **bad vs good system design examples (real company style)**

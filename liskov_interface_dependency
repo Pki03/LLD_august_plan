@@ -1,0 +1,161 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+
+//liskov problem 
+
+public class Green 
+{
+    public void getColor()
+    {
+        System.out.println("green");
+    }
+}
+
+public class Blue extends green
+{
+    public void getColor()
+    {
+        System.out.println("blue");
+    }
+}
+
+//i get blue when i want green
+
+
+public inteface Color
+{
+    public void getColor();
+}
+
+public class Green implements Color{
+    
+}
+
+public class Blue implements Color{
+    
+}
+
+//i can get whatever i want 
+
+
+//another example of likov is that flying bird can both walk and fly wheras penguin can only walk , System
+//so it doesnt want any unecessary things
+
+
+
+
+//interface segregation
+
+//problem 
+
+public interface Document
+{
+    void open();
+    void close();
+    void sendemail();
+    void print();
+}
+
+public class pdfdoc implements Document
+{
+    void open()
+    {
+        fjdjhjfo
+    }
+    void close();
+    {
+        fjdlfjfo
+    }
+    
+    void sendEmail()
+    {
+        denkn
+    }
+    
+    void print()
+    {
+        jbskjfbdw
+    }
+}
+
+public class worddoc implements Document
+{
+    void open()
+    {
+        fjdjhjfo
+    }
+    void close();
+    {
+        fjdlfjfo
+    }
+    
+    void sendEmail()
+    {
+        denkn
+    }
+    
+    void print()
+    {
+        jbskjfbdw
+    }
+}
+
+//we have to unecessarily write and implement things we dont want
+
+//solution
+
+public interface OpenSave {
+ void open();
+ void save();
+}
+public interface Print {
+ void print();
+}
+public interface SendViaEmail {
+ void sendViaEmail();
+}
+
+public class PDFDocument implements OpenSave, Print {
+ public void open() {
+ // Logic for opening a PDF document
+ }
+ 
+ public void save() {
+ // Logic for saving a PDF document
+ }
+ 
+ public void print() {
+ // Logic for printing a PDF document
+ }
+}
+public class WordDocument implements OpenSave, SendViaEmail {
+ public void open() {
+ // Logic for opening a Word document
+ }
+ 
+ public void save() {
+ // Logic for saving a Word document
+ }
+ 
+ public void sendViaEmail() {
+ // Logic for sending a Word document via email
+ }
+}
+
+
+//dependency inversion
+
+//Dependency inversion — to change the directions of dependency
+//It has two main rules -
+//The high-level modules should not depend on the low-level modules. Instead, both should depend on the Abstractions.
+//The Abstractions should NOT depend on the Details. The Details should depend on the Abstractions.
+
+
+
+
